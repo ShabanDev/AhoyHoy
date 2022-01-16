@@ -11,6 +11,7 @@ const nextApp = next({dev});
 const nextHandler = nextApp.getRequestHandler();
 
 nextApp.prepare().then(async () => {
+    console.log('preparing next app...');
     const app = express();
     app.use(cors());
     const server = http.createServer(app);
@@ -34,7 +35,8 @@ nextApp.prepare().then(async () => {
         });
     
         socket.on('calluser', ({userToCall, signalData, from, name}) => {
-            io.to(userToCall).emit('calluser', {signal, signalData, from, name});
+            console.log(`Server - calluser`);
+            io.to(userToCall).emit('calluser', {signal: signalData, from, name});
         });
     
         socket.on('answercall', (data) => {
